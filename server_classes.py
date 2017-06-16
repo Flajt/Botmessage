@@ -10,10 +10,10 @@ class server():
     def __init__(self):
         self.log_path="/etc/Botmessage_Server/log"
         self.time=time.asctime()
+        self.data_path="/etc/Botmessage_Server/data"
 
 
-
-    def loger(self, error):
+    def logger(self, error):
         if not os.path.exists(self.log_path):
             os.chdir("/etc")
             os.mkdirs("Botmessage_Server/log")
@@ -29,12 +29,16 @@ class server():
 
     def setup(self, username ,mac):
         try:
+            os.chdir(self.data_path)
             data_bank=open("data.txt","a")
             data_bank.write("Name: "+str(username)+" mac_address: "+str(mac))
             data.close()
         except Exception as e:
-            self.loger(e)
+            self.logger(e)
 
 
-    def login():
-        pass
+    def login(self, user, mac):
+        data_bank=open(self.data_path+"/data.txt", "r")
+        for lines in data_bank:
+            data=data_bank.read()
+            print("")
