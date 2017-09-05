@@ -38,7 +38,7 @@ Builder.load_string("""
         FloatLayout:
 
         Button:
-            text:"Registrieren"
+            text:"to register"
             size_hint: 0.5,0.5
             pos_hint:{'left_x':.10, 'right_y':.10}
             on_press:root.star()
@@ -57,7 +57,7 @@ Builder.load_string("""
 
 
             Button:
-                text:"Anmelden"
+                text:"Log In"
                 size_hint: 1,1
                 #pos_hint:{'center_x':.5000, 'left_y':.500}
                 on_press:root.start()
@@ -118,12 +118,12 @@ Builder.load_string("""
             bcolor: 0,1,0,1
 
         Button:
-            text: "login"                                                       #wird eingeloggt und zur Hauptseite weitergeleitet
+            text: "Log In"                                                       #wird eingeloggt und zur Hauptseite weitergeleitet
             pos_hint:{'right_x':.50, 'right_y':.5}
             on_press:root.login()
 
             Button:
-                text: "Registrieren"
+                text: "To register"
                 pos_hint:{'left_x':.10, 'right_y':.5}
                 #size_hint: 7,7
                 on_press: root.inlog()
@@ -141,7 +141,7 @@ Builder.load_string("""
 
 
         Button:
-            text: "vergessen"                                                   #noch keine Funktion
+            text: "Forget"                                                   #noch keine Funktion
             size_hint: 1,1
             pos_hint:{'center_x':.50, 'right_y':.5}
 
@@ -195,12 +195,12 @@ Builder.load_string("""
             bcolor: 0,1,0,1
 
         Button:
-            text: "login"                                                       #wird eingeloggt und zur Hauptseite weitergeleitet
+            text: "Log In"                                                       #wird eingeloggt und zur Hauptseite weitergeleitet
             pos_hint:{'right_x':.50, 'right_y':.5}
             on_press:root.login()
 
             Button:
-                text: "Registrieren"
+                text: "To register"
                 pos_hint:{'left_x':.10, 'right_y':.5}
                 size_hint: 7,7
                 on_press:root.Eine()
@@ -223,34 +223,21 @@ Builder.load_string("""
             pos_hint:{'center_x':.50, 'right_y':.5}
 
 
-<Hauptseite>:                                                                   #nächste seite, nach der anmeldung
-    BoxLayout:
-        id: kutu
-        orientation: "vertical"
-        Button:
-            text:"Menü"
-            pos_hint: {'left_x':.50, 'right_y':.5}
-            size_hint:0.15, 0.15
-            on_press:root.zwei()
+<Hauptseite>:
+                                                                 #nächste seite, nach der anmeldung
+    PageLayout:
+        rows:1
+        cols:1
 
         Button:
-            text:"Einstellung"
-            pos_hint: {'left_x':.50, 'right_y':.5}
-            size_hint:0.15, 0.15
-            on_press:root.load()
-
-        Label:
-            id: karsilama_yazisi
-            text: "Deine Chats"
-        Label:
-
 
         Button:
-            text:"zurück"
-            pos_hint:{'left_x':.50, 'left_y':.5}
-            size_hint:0.1, 0.1
-            pos_hint:{'right_x':.50, 'right_y':.5}
-            on_press:root.back()
+
+
+
+
+
+
 <Anmelden>:
     GridLayout:
         rows:9
@@ -286,7 +273,7 @@ Builder.load_string("""
 
         FloatLayout:
         Label:
-            text:"Registrierung"
+            text:"Registration"
             size_hint:2,2
             canvas.before:
                 Color:
@@ -299,7 +286,7 @@ Builder.load_string("""
 
 
         Label:
-            text:"Handy Nummer"
+            text:"Mobile number"
             size_hint: 0.1,0.2
 
 
@@ -310,7 +297,7 @@ Builder.load_string("""
 
 
         Label:
-            text: "Email Adresse"                                                    #Password ist chat(wird Verschlüsselt angezeigt)
+            text: "E-mail address"                                                    #Password ist chat(wird Verschlüsselt angezeigt)
             #font_size: "10sp"
             size_hint: 0.1,0.1
 
@@ -333,7 +320,7 @@ Builder.load_string("""
 
 
         Label:
-            text:"Password wiederholen"
+            text:"Repeat password"
             front_size:"12"
 
         TextInput:
@@ -345,7 +332,7 @@ Builder.load_string("""
         Label:                                                                  #Platzsparer
 
         Button:
-            text: "login"
+            text: "Log In"
             pos_hint:{'left_x':.50, 'left_y':.50}
             on_press:root.login()
 
@@ -358,10 +345,12 @@ Builder.load_string("""
             size_hint:1,4
 
         Button:
-            text:"bereits Registriert"
+            text:"Already registered"
             pos_hint:{'center_x':.50, 'right_y':.5}
             size_hint:0,0
-            on_press:root.build()
+            on_press:root.log()
+
+
 
 <Einstellung>:
     FloatLayout:
@@ -414,7 +403,6 @@ Builder.load_string("""
     Firstpage:
         id: red
         name:""
-
     Startseite:
         id: onay
         name: "erste"
@@ -423,14 +411,17 @@ Builder.load_string("""
         name: "ein"
     Startseite:
         id:onay
-        name: ""
-
+        name: "back"
     Hauptseite:
         id: onay
         name: "Meine Chats"
     Anmelden:
         id: onay
         name: "zweite"
+    Anmelden:
+        id: red
+        name:"regi"
+
     Einstellung:
         id: onay
         name: "zwei"
@@ -443,9 +434,13 @@ Builder.load_string("""
 """)
 
 class Firstpage(Screen):
+
+    def star(self):
+        self.manager.current = "regi"
     def start(self):
-        self.manager.current = "zweite"
         self.manager.current = "erste"
+
+
 
 class Startseite(Screen):
     def login(self):
@@ -453,6 +448,8 @@ class Startseite(Screen):
             self.ids.passwd.text == "chat":
             self.manager.current = "Meine Chats"
 
+    def inlog(self):
+            self.manager.current = "regi"
 
 
     def incomingData(self, req, results):
@@ -467,13 +464,14 @@ class Firstpage(Screen):
 
 
 
+
+
     def incomingData(self, req, results):
         sicaklik = data["list"][0]["main"]["temp"]-273.15
 
-class Startseite(Screen):
-    pass                                                         # so der button sich befindet
-    #def inlog(self):                                                            #bei tastendruck( root)
-    #    self.manager.current = "regi"
+    #class Startseite(Screen):
+    #        def inlog(self):
+    #            self.manager.current = "regi"
 
 
 
@@ -486,7 +484,8 @@ class Hauptseite(Screen):
             self.manager.current = "zwei"
 
 class Anmelden(Screen):
-    pass
+    def log(self):
+        self.manager.current = "back"
 
 class Startseite1(Screen):
     pass
